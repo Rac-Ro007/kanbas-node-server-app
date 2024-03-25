@@ -11,10 +11,10 @@ const module = {
 };
 
 const todos = [
-  { id: 1, title: "Learn HTML", completed: false },
-  { id: 2, title: "Learn JavaScript", completed: true },
-  { id: 3, title: "Learn Node.js", completed: false },
-  { id: 4, title: "Learn React", completed: true },
+  { id: 1, title: "Learn HTML", description:"", completed: false },
+  { id: 2, title: "Learn JavaScript", description:"", completed: true },
+  { id: 3, title: "Learn Node.js", description:"", completed: false },
+  { id: 4, title: "Learn React", description:"", completed: true },
 ];
 
 
@@ -35,6 +35,7 @@ const Lab5 = (app) => {
     const newTodo = {
       id: new Date().getTime(),
       title: "New Task",
+      description: "",
       completed: false,
     };
     todos.push(newTodo);
@@ -54,6 +55,20 @@ const Lab5 = (app) => {
     if (todoIndex !== -1) {
       todos.splice(todoIndex, 1);
     }
+    res.json(todos);
+  });
+
+  app.get("/a5/todos/:id/completed/:completed", (req, res) => {
+    const { id, completed } = req.params;
+    const todo = todos.find((t) => t.id === parseInt(id));
+    todo.completed = completed;
+    res.json(todos);
+  });
+  
+  app.get("/a5/todos/:id/description/:description", (req, res) => {
+    const { id, description } = req.params;
+    const todo = todos.find((t) => t.id === parseInt(id));
+    todo.description = description;
     res.json(todos);
   });
 
