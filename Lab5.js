@@ -11,12 +11,11 @@ const module = {
 };
 
 const todos = [
-  { id: 1, title: "Learn HTML", description:"", completed: false },
-  { id: 2, title: "Learn JavaScript", description:"", completed: true },
-  { id: 3, title: "Learn Node.js", description:"", completed: false },
-  { id: 4, title: "Learn React", description:"", completed: true },
+  { id: 1, title: "Learn HTML", description:"", due:"", completed: false },
+  { id: 2, title: "Learn JavaScript", description:"", due:"", completed: true },
+  { id: 3, title: "Learn Node.js", description:"", due:"", completed: false },
+  { id: 4, title: "Learn React", description:"", due:"", completed: true },
 ];
-
 
 const Lab5 = (app) => {
   app.get("/a5/todos", (req, res) => {
@@ -31,16 +30,52 @@ const Lab5 = (app) => {
     res.json(todos);
   });
 
-  app.get("/a5/todos/create", (req, res) => {
+  app.post("/a5/todos", (req, res) => {
     const newTodo = {
+      ...req.body,
       id: new Date().getTime(),
-      title: "New Task",
-      description: "",
-      completed: false,
     };
     todos.push(newTodo);
-    res.json(todos);
+    res.json(newTodo);
   });
+
+  app.delete("/a5/todos/:id", (req, res) => {
+    const { id } = req.params;
+    const todo = todos.find((t) => t.id === parseInt(id));
+    if (!todo) {
+      res.status(404)
+        .json({ message: `Unable to delete Todo with ID ${id}` });
+      return;
+    }
+    todos.splice(todos.indexOf(todo), 1);
+    res.sendStatus(200);
+  });
+
+  app.put("/a5/todos/:id", (req, res) => {
+    const { id } = req.params;
+    const todo = todos.find((t) => t.id === parseInt(id));
+    if (!todo) {
+      res.status(404)
+        .json({ message: `Unable to update Todo with ID ${id}` });
+      return;
+    }
+    todo.title = req.body.title;
+    todo.description = req.body.description;
+    todo.due = req.body.due;
+    todo.completed = req.body.completed;
+    res.sendStatus(200);
+  });
+
+  // app.get("/a5/todos/create", (req, res) => {
+  //   const newTodo = {
+  //     id: new Date().getTime(),
+  //     title: "New Task",
+  //     description: "",
+  //     completed: false,
+  //   };
+  //   todos.push(newTodo);
+  //   res.json(todos);
+  // });
 
   app.get("/a5/todos/:id", (req, res) => {
     const { id } = req.params;
