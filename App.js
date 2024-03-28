@@ -8,12 +8,12 @@ import ModuleRoutes from "./Kanbas/modules/routes.js";
 
 const app = express()
 app.use(cors());
+app.use(express.json());
 CourseRoutes(app);
 ModuleRoutes(app);
-app.use(express.json());
 Hello(app)
 Lab5(app)
 
 app.listen(4000, function () {
-    console.log("Express server listening on port 3000");
+    console.log("Express server listening on port 4000");
 });
