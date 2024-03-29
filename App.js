@@ -16,6 +16,6 @@ AssignmentRoutes(app);
 Hello(app)
 Lab5(app)
 
-app.listen(4000, function () {
+app.listen(process.env.PORT || 4000, function () {
     console.log("Express server listening on port 4000");
 });
