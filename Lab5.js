@@ -66,16 +66,16 @@ const Lab5 = (app) => {
     res.sendStatus(200);
   });
 
-  // app.get("/a5/todos/create", (req, res) => {
-  //   const newTodo = {
-  //     id: new Date().getTime(),
-  //     title: "New Task",
-  //     description: "",
-  //     completed: false,
-  //   };
-  //   todos.push(newTodo);
-  //   res.json(todos);
-  // });
+  app.get("/a5/todos/create", (req, res) => {
+    const newTodo = {
+      id: new Date().getTime(),
+      title: "New Task",
+      description: "",
+      completed: false,
+    };
+    todos.push(newTodo);
+    res.json(todos);
+  });
 
   app.get("/a5/todos/:id", (req, res) => {
     const { id } = req.params;
