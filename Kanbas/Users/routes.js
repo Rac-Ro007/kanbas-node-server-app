@@ -4,14 +4,20 @@ import * as dao from "./dao.js";
 const UserRoutes = (app) => {
   app.get("/api/users", async (req, res) => {
     // res.send(db.users);
-    const wer = await dao.findAllUsers();
-    res.json(wer);
+    const users = await dao.findAllUsers();
+    res.json(users);
   });
 
   app.get("/api/users/:userId", async (req, res) => {
     const userId = req.params.userId;
     const user = await dao.findUserById(userId);
     res.send(user);
+  });
+
+  app.post("/api/users", async (req, res) => {
+    const user = await dao.createUser(req.body);
+    console.log(user)
+    res.json(user);
   });
 
   app.post("/api/users/register", async (req, res) => {
@@ -67,6 +73,19 @@ const UserRoutes = (app) => {
       res.status(401).send("Invalid credentials");
     }
   });
+
+  app.put("/api/users/:userId", async (req, res) => {
+    const { userId } = req.params;
+    const status = await dao.updateUser(userId, req.body);
+    req.session.currentUser = await dao.findUserById(userId);
+    res.json(status);
+  });
+
+  app.delete("/api/users/:userId", async (req, res) => {
+    const status = await dao.deleteUser(req.params.userId);
+    res.json(status);
+  });
+
 }
 
 export default UserRoutes;
