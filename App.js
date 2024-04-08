@@ -12,6 +12,8 @@ import UserRoutes from "./Kanbas/Users/routes.js";
 import mongoose from "mongoose";
 import session from "express-session";
 
+mongoose.connect("mongodb+srv://Cluster24305:T05NZXFHZmRH@cluster24305.15bekze.mongodb.net/kanbas");
+
 const app = express()
 // app.use(cors())
 app.use(
