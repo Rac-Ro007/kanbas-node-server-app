@@ -4,6 +4,12 @@ import * as dao from "./dao.js";
 const UserRoutes = (app) => {
   app.get("/api/users", async (req, res) => {
     // res.send(db.users);
+    const { role } = req.query;
+    if (role) {
+      const users = await dao.findUsersByRole(role);
+      res.json(users);
+      return;
+    }
     const users = await dao.findAllUsers();
     res.json(users);
   });
