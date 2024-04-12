@@ -26,7 +26,7 @@ const UserRoutes = (app) => {
     res.json(user);
   });
 
-  app.post("/api/users/register", async (req, res) => {
+  app.post("/api/users/signup", async (req, res) => {
     console.log("[1] register");
     const { username, password } = req.body;
     console.log("[2] username, password", username, password);
