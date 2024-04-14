@@ -12,21 +12,23 @@ import UserRoutes from "./Kanbas/Users/routes.js";
 import mongoose from "mongoose";
 import session from "express-session";
 
-mongoose.connect("mongodb+srv://Cluster24305:T05NZXFHZmRH@cluster24305.15bekze.mongodb.net/kanbas");
+mongoose.connect(process.env.MONGO_URL);
 
 const app = express()
 // app.use(cors())
 app.use(
     cors({
       credentials: true,
-      origin: process.env.FRONTEND_URL
+      origin: [process.env.FRONTEND_URL, process.env.FRONTEND_URL2]
     })
-);  
+);
+
 const sessionOptions = {
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
 };
+
 if (process.env.NODE_ENV !== "development") {
     sessionOptions.proxy = true;
     sessionOptions.cookie = {
@@ -35,6 +37,7 @@ if (process.env.NODE_ENV !== "development") {
         domain: process.env.BACKEND_URL,
     };
 }
+
 app.use(session(sessionOptions));  
 app.use(express.json());
 CourseRoutes(app);
