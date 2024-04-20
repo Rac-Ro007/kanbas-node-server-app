@@ -41,13 +41,6 @@ function ModuleRoutes(app) {
     res.sendStatus(204);
   });
 
-  app.put("/api/users/:userId", async (req, res) => {
-    const { userId } = req.params;
-    const status = await dao.updateUser(userId, req.body);
-    req.session.currentUser = await dao.findUserById(userId);
-    res.json(status);
-  });
-
 }
 
 export default ModuleRoutes;
